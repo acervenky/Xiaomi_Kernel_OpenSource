@@ -2140,6 +2140,7 @@ static int f2fs_dquot_commit_info(struct super_block *sb, int type)
 	if (ret < 0)
 		set_sbi_flag(F2FS_SB(sb), SBI_QUOTA_NEED_REPAIR);
 	return ret;
+
 }
 
 static int f2fs_get_projid(struct inode *inode, kprojid_t *projid)
