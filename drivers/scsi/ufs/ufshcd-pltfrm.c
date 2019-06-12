@@ -565,8 +565,14 @@ int ufshcd_pltfrm_init(struct platform_device *pdev,
 
 	pm_runtime_set_active(&pdev->dev);
 	pm_runtime_enable(&pdev->dev);
+<<<<<<< HEAD
 
 	return 0;
+=======
+
+	return 0;
+
+>>>>>>> 73e3c601e9dc... scsi: ufs: Avoid runtime suspend possibly being blocked forever
 dealloc_host:
 	ufshcd_dealloc_host(hba);
 out:
