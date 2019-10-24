@@ -351,7 +351,10 @@ static const struct __ftr_reg_entry {
 	/* Op1 = 0, CRn = 0, CRm = 4 */
 	ARM64_FTR_REG(SYS_ID_AA64PFR0_EL1, ftr_id_aa64pfr0),
 	ARM64_FTR_REG(SYS_ID_AA64PFR1_EL1, ftr_id_aa64pfr1),
+<<<<<<< HEAD
 	ARM64_FTR_REG(SYS_ID_AA64ZFR0_EL1, ftr_raz),
+=======
+>>>>>>> 7ec258d023de... arm64: cpufeature: Detect SSBS and advertise to userspace
 
 	/* Op1 = 0, CRn = 0, CRm = 5 */
 	ARM64_FTR_REG(SYS_ID_AA64DFR0_EL1, ftr_id_aa64dfr0),
@@ -873,12 +876,8 @@ static bool unmap_kernel_at_el0(const struct arm64_cpu_capabilities *entry,
 	return !has_cpuid_feature(entry, scope);
 }
 
-<<<<<<< HEAD
-static int __nocfi kpti_install_ng_mappings(void *__unused)
-=======
 static void
 kpti_install_ng_mappings(const struct arm64_cpu_capabilities *__unused)
->>>>>>> 0e606f018d76... arm64: capabilities: Update prototype for enable call back
 {
 	typedef void (kpti_remap_fn)(int, int, phys_addr_t);
 	extern kpti_remap_fn idmap_kpti_install_ng_mappings;
@@ -1177,6 +1176,7 @@ static const struct arm64_cpu_capabilities arm64_features[] = {
 		.min_field_value = 1,
 	},
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_ARM64_HW_AFDBM
 	{
 		/*
@@ -1200,14 +1200,24 @@ static const struct arm64_cpu_capabilities arm64_features[] = {
 	{
 		.desc = "Speculative Store Bypassing Safe (SSBS)",
 		.capability = ARM64_SSBS,
+=======
+	{
+		.desc = "Speculative Store Bypassing Safe (SSBS)",
+		.capability = ARM64_SSBS,
+		.type = ARM64_CPUCAP_WEAK_LOCAL_CPU_FEATURE,
+>>>>>>> 7ec258d023de... arm64: cpufeature: Detect SSBS and advertise to userspace
 		.matches = has_cpuid_feature,
 		.sys_reg = SYS_ID_AA64PFR1_EL1,
 		.field_pos = ID_AA64PFR1_SSBS_SHIFT,
 		.sign = FTR_UNSIGNED,
 		.min_field_value = ID_AA64PFR1_SSBS_PSTATE_ONLY,
+<<<<<<< HEAD
 		.enable = cpu_enable_ssbs,
 	},
 #endif
+=======
+	},
+>>>>>>> 7ec258d023de... arm64: cpufeature: Detect SSBS and advertise to userspace
 	{},
 };
 
@@ -1251,6 +1261,7 @@ static const struct arm64_cpu_capabilities arm64_elf_hwcaps[] = {
 	HWCAP_CAP(SYS_ID_AA64PFR1_EL1, ID_AA64PFR1_SSBS_SHIFT, FTR_UNSIGNED, ID_AA64PFR1_SSBS_PSTATE_INSNS, CAP_HWCAP, HWCAP_SSBS),
 	HWCAP_CAP(SYS_ID_AA64ISAR1_EL1, ID_AA64ISAR1_LRCPC_SHIFT, FTR_UNSIGNED, 2, CAP_HWCAP, HWCAP_ILRCPC),
 	HWCAP_CAP(SYS_ID_AA64MMFR2_EL1, ID_AA64MMFR2_AT_SHIFT, FTR_UNSIGNED, 1, CAP_HWCAP, HWCAP_USCAT),
+	HWCAP_CAP(SYS_ID_AA64PFR1_EL1, ID_AA64PFR1_SSBS_SHIFT, FTR_UNSIGNED, ID_AA64PFR1_SSBS_PSTATE_INSNS, CAP_HWCAP, HWCAP_SSBS),
 	{},
 };
 
