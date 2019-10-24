@@ -44,4 +44,5 @@
 #define HWCAP_SHA512		(1 << 21)
 #define HWCAP_SSBS		(1 << 22)
 
+
 #endif /* _UAPI__ASM_HWCAP_H */
