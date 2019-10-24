@@ -177,7 +177,8 @@ static inline void compat_start_thread(struct pt_regs *regs, unsigned long pc,
 #endif
 
 	if (arm64_get_ssbd_state() != ARM64_SSBD_FORCE_ENABLE)
-		regs->pstate |= COMPAT_PSR_SSBS_BIT;
+
+		regs->pstate |= PSR_AA32_SSBS_BIT;
 
 	regs->compat_sp = sp;
 }

@@ -351,10 +351,7 @@ static const struct __ftr_reg_entry {
 	/* Op1 = 0, CRn = 0, CRm = 4 */
 	ARM64_FTR_REG(SYS_ID_AA64PFR0_EL1, ftr_id_aa64pfr0),
 	ARM64_FTR_REG(SYS_ID_AA64PFR1_EL1, ftr_id_aa64pfr1),
-<<<<<<< HEAD
 	ARM64_FTR_REG(SYS_ID_AA64ZFR0_EL1, ftr_raz),
-=======
->>>>>>> 7ec258d023de... arm64: cpufeature: Detect SSBS and advertise to userspace
 
 	/* Op1 = 0, CRn = 0, CRm = 5 */
 	ARM64_FTR_REG(SYS_ID_AA64DFR0_EL1, ftr_id_aa64dfr0),
@@ -1014,22 +1011,23 @@ static int ssbs_emulation_handler(struct pt_regs *regs, u32 instr)
 	if (user_mode(regs))
 		return 1;
 
-	if (instr & BIT(PSTATE_Imm_shift))
+	if (instr & BIT(CRm_shift))
 		regs->pstate |= PSR_SSBS_BIT;
 	else
 		regs->pstate &= ~PSR_SSBS_BIT;
 
-	regs->pc += 4;
+
+	arm64_skip_faulting_instruction(regs, 4);
 	return 0;
 }
 
 static struct undef_hook ssbs_emulation_hook = {
-	.instr_mask	= ~(1U << PSTATE_Imm_shift),
-	.instr_val	= 0xd500401f | PSTATE_SSBS,
+	.instr_mask	= ~(1U << CRm_shift),
+	.instr_val	= 0xd500001f | REG_PSTATE_SSBS_IMM,
 	.fn		= ssbs_emulation_handler,
 };
 
-static int cpu_enable_ssbs(void *__unsused)
+static void cpu_enable_ssbs(const struct arm64_cpu_capabilities *__unused)
 {
 	static bool undef_hook_registered = false;
 	static DEFINE_SPINLOCK(hook_lock);
@@ -1042,13 +1040,12 @@ static int cpu_enable_ssbs(void *__unsused)
 	spin_unlock(&hook_lock);
 
 	if (arm64_get_ssbd_state() == ARM64_SSBD_FORCE_DISABLE) {
-		write_sysreg((read_sysreg(sctlr_el1) | SCTLR_ELx_DSSBS),
-				sctlr_el1);
+
+		sysreg_clear_set(sctlr_el1, 0, SCTLR_ELx_DSSBS);
 		arm64_set_ssbd_mitigation(false);
 	} else {
 		arm64_set_ssbd_mitigation(true);
 	}
-	return 0;
 }
 #endif /* CONFIG_ARM64_SSBD */
 
@@ -1176,7 +1173,6 @@ static const struct arm64_cpu_capabilities arm64_features[] = {
 		.min_field_value = 1,
 	},
 #endif
-<<<<<<< HEAD
 #ifdef CONFIG_ARM64_HW_AFDBM
 	{
 		/*
@@ -1200,24 +1196,16 @@ static const struct arm64_cpu_capabilities arm64_features[] = {
 	{
 		.desc = "Speculative Store Bypassing Safe (SSBS)",
 		.capability = ARM64_SSBS,
-=======
-	{
-		.desc = "Speculative Store Bypassing Safe (SSBS)",
-		.capability = ARM64_SSBS,
 		.type = ARM64_CPUCAP_WEAK_LOCAL_CPU_FEATURE,
->>>>>>> 7ec258d023de... arm64: cpufeature: Detect SSBS and advertise to userspace
 		.matches = has_cpuid_feature,
 		.sys_reg = SYS_ID_AA64PFR1_EL1,
 		.field_pos = ID_AA64PFR1_SSBS_SHIFT,
 		.sign = FTR_UNSIGNED,
 		.min_field_value = ID_AA64PFR1_SSBS_PSTATE_ONLY,
-<<<<<<< HEAD
-		.enable = cpu_enable_ssbs,
+
+		.cpu_enable = cpu_enable_ssbs,
 	},
 #endif
-=======
-	},
->>>>>>> 7ec258d023de... arm64: cpufeature: Detect SSBS and advertise to userspace
 	{},
 };
 
