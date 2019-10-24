@@ -155,19 +155,25 @@ struct midr_range {
 };
 
 #define GENERIC_MIDR_RANGE(m, v_min, r_min, v_max, r_max)	\
+#define MIDR_RANGE(m, v_min, r_min, v_max, r_max)		\
 	{							\
 		.model = m,					\
 		.rv_min = MIDR_CPU_VAR_REV(v_min, r_min),	\
 		.rv_max = MIDR_CPU_VAR_REV(v_max, r_max),	\
 	}
 
+
 #define GENERIC_MIDR_ALL_VERSIONS(m) GENERIC_MIDR_RANGE(m, 0, 0, 0xf, 0xf)
+
+#define MIDR_ALL_VERSIONS(m) MIDR_RANGE(m, 0, 0, 0xf, 0xf)
+
 
 static inline bool is_midr_in_range(u32 midr, struct midr_range const *range)
 {
 	return MIDR_IS_CPU_MODEL_RANGE(midr, range->model,
 				 range->rv_min, range->rv_max);
 }
+
 
 static inline bool
 is_midr_in_range_list(u32 midr, struct midr_range const *ranges)
@@ -177,6 +183,7 @@ is_midr_in_range_list(u32 midr, struct midr_range const *ranges)
 			return true;
 	return false;
 }
+
 
 /*
  * The CPU ID never changes at run time, so we might as well tell the
