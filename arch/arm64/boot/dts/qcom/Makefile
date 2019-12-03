@@ -1,11 +1,4 @@
 # SPDX-License-Identifier: GPL-2.0
-dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
-dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
-dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
-dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-mtp.dtb
-dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-bullhead-rev-101.dtb
-dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-angler-rev-101.dtb
-dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-mtp.dtb
 
 dtb-$(CONFIG_ARCH_QCS403) += qcs403-iot-sku1.dtb \
 			qcs403-iot-sku3.dtb \
@@ -29,31 +22,8 @@ dtb-$(CONFIG_ARCH_QCS405) += qcs405-iot-sku1.dtb \
 
 ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
 	dtbo-$(CONFIG_ARCH_SM8150) += \
-		sm8150-cdp-overlay.dtbo \
-		sm8150-mtp-overlay.dtbo \
-		cepheus-sm8150-overlay.dtbo \
-		crux-sm8150-overlay.dtbo \
-		andromeda-sm8150-overlay.dtbo \
-		andromeda-sm8150-p1-overlay.dtbo \
-		andromeda-sm8150-p1_1-overlay.dtbo \
-		andromeda-sm8150-p2-overlay.dtbo \
-		andromeda-sm8150-p2_1-overlay.dtbo \
-		andromeda-sm8150-p2_2-overlay.dtbo \
-		andromeda-sm8150-p2_21-overlay.dtbo \
-		andromeda-sm8150-p2_22-overlay.dtbo \
-		raphael-sm8150-overlay.dtbo \
-		sm8150-rumi-overlay.dtbo \
-		sm8150-qrd-overlay.dtbo \
-		sm8150-qrd-dvt-overlay.dtbo \
-		sm8150-sdx50m-cdp-overlay.dtbo \
-		sm8150-sdx50m-mtp-overlay.dtbo \
-		sm8150-sdx50m-mtp-2.5k-panel-overlay.dtbo \
-		sm8150-sdx50m-qrd-overlay.dtbo \
-		sm8150-sdxprairie-cdp-overlay.dtbo \
-		sm8150-sdxprairie-mtp-overlay.dtbo \
-		sm8150-sdxprairie-v2-cdp-overlay.dtbo \
-		sm8150-sdxprairie-v2-mtp-overlay.dtbo \
-		sm8150-hdk-overlay.dtbo
+		raphael-sm8150-overlay.dtbo 
+
 
 sm8150-cdp-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
 sm8150-mtp-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
@@ -67,7 +37,7 @@ andromeda-sm8150-p2_1-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb 
 andromeda-sm8150-p2_2-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
 andromeda-sm8150-p2_21-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
 andromeda-sm8150-p2_22-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
-raphael-sm8150-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
+raphael-sm8150-overlay.dtbo-base := sm8150-v2.dtb
 sm8150-rumi-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
 sm8150-qrd-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
 sm8150-hdk-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
